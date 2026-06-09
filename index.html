@@ -1,134 +1,175 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Car Game| Game by Sushant Naik</title>
-    
-    <!-- <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> -->
-    <script src="/sources/3d.js"></script>
-  </head>
-  <style>
-    #progress{
-      position: absolute;    
-            top: 20px;             
-            left: 50%;             
-            transform: translateX(-50%); 
-            z-index: 9999;         
-            background-color: rgba(255, 0, 0, 0.9);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 15px 30px;
-            border-radius: 10px;
-            border: 2px solid white;
-          }
-  </style>
-  <script>
 
-    AFRAME.registerComponent('endless-loop', {
-        tick: function () {
-          let currentZ = this.el.object3D.position.z;
-          if (currentZ < -15) {
-            this.el.object3D.position.z += 15;
-          }
-          if (currentZ > 0) {
-            this.el.object3D.position.z -= 15;
-          }
-        }
-      });
+<head>
+  <title>Car Game| Waideek-Playgrounds | Game by Sushant Naik</title>
+  <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
+  <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="me" href="https://orcid.org/0009-0005-6333-4299" />
+  <link rel="me" href="https://www.instagram.com/sushant_naik_official/" />
+  <link rel="me" href="http://www.linkedin.com/in/sushant-naik-42a48b390" />
+  <link rel="me" href="https://www.youtube.com/@sushant_naik_official" />
+  <link rel="me" href="https://x.com/sushant_naik_" />
+  <link rel="me" href="https://github.com/sushantmnaik" />
+  <link rel="me" href="https://t.me/sushant_naik_official" />
+  <link rel="me"
+    href="https://www.hipi.co.in/@sushant_naik_official?utm_source=Android&utm_medium=my_profile&utm_campaign=hipi_shared_link" />
+  <link rel="me" href="https://picsart.com/u/sushantnaikofficial" />
+  <link rel="me" href="https://whatsapp.com/channel/0029Va5wicVAO7RESSBVUU3A" />
+  <link rel="me" href="https://bsky.app/profile/sushantnaik.bsky.social" />
 
-     var crash = 0
-     
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-     
-     AFRAME.registerComponent('crash-detector', {
-       tick: function () {
-      let life = document.getElementById("life")
-      
-      if (crash==1000){
-          alert("Game Over!")
-          confirm("Want to play once again?")
-          crash=0
-          life.value=1000
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCeklBMriMdpkoe1rFXVa7SrCRn9wCjXqg",
+    authDomain: "waideek-playgrounds.firebaseapp.com",
+    projectId: "waideek-playgrounds",
+    storageBucket: "waideek-playgrounds.firebasestorage.app",
+    messagingSenderId: "437062906755",
+    appId: "1:437062906755:web:ed9c5fd07adeaa5cc2bcb6",
+    measurementId: "G-581VRQCE9Q"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+
+
+
+
+
+
+  <!-- <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script> -->
+  <script src="/sources/3d.js"></script>
+</head>
+<style>
+  #progress {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: 2px solid white;
+  }
+</style>
+<script>
+
+  AFRAME.registerComponent('endless-loop', {
+    tick: function () {
+      let currentZ = this.el.object3D.position.z;
+      if (currentZ < -15) {
+        this.el.object3D.position.z += 15;
       }
-      
+      if (currentZ > 0) {
+        this.el.object3D.position.z -= 15;
+      }
+    }
+  });
+
+  var crash = 0
+
+
+
+  AFRAME.registerComponent('crash-detector', {
+    tick: function () {
+      let life = document.getElementById("life")
+
+      if (crash == 1000) {
+        alert("Game Over!")
+        confirm("Want to play once again?")
+        crash = 0
+        life.value = 1000
+      }
+
       let jetBox = new THREE.Box3().setFromObject(this.el.object3D);
       let hazards = document.querySelectorAll('.hazard');
       for (let i = 0; i < hazards.length; i++) {
         let hazardBox = new THREE.Box3().setFromObject(hazards[i].object3D);
         if (jetBox.intersectsBox(hazardBox)) {
-            console.log("CRASH!");
-            crash += 1
-            var li = life.value - 1
-            life.value = li
-            let rig = document.querySelector('#rig');
-            rig.object3D.position.set(0, 0, 0); 
+          console.log("CRASH!");
+          crash += 1
+          var li = life.value - 1
+          life.value = li
+          let rig = document.querySelector('#rig');
+          rig.object3D.position.set(0, 0, 0);
         }
 
       }
     }
   });
-  </script>
-  <body>
-    <div id="progress">
-      <span>Your life:</span>
-      <progress style="color: white;" id="life" value="1000" max="1000">&hearts;</progress>
-    </div>
-    <a-scene id="rig">
-      <a-sky color="aqua"></a-sky>
-<a-entity id="rig"  position="0 0 0">
+</script>
 
-  <a-camera endless-loop position="0 -1 0">
-    
-    <a-gltf-model 
-    crash-detector
-    src="gaadi.glb" 
-    position="0 0 -3" 
-    
-    scale="2 2 2"
-    
-    >
-  </a-gltf-model>
-  
-</a-camera>
+<body>
+  <div id="progress">
+    <span>Your life:</span>
+    <progress style="color: white;" id="life" value="1000" max="1000">&hearts;</progress>
+  </div>
+  <a-scene id="rig">
+    <a-sky color="aqua"></a-sky>
+    <a-entity id="rig" position="0 0 0">
 
-</a-entity>
+      <a-camera endless-loop position="0 -1 0">
+
+        <a-gltf-model crash-detector src="gaadi.glb" position="0 0 -3" scale="2 2 2">
+        </a-gltf-model>
+
+      </a-camera>
+
+    </a-entity>
 
 
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 -15" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 -15" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 -15" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 -10" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 -10" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 -10" scale="9 9 9"></a-gltf-model>
-    
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 -15" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 -15" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 -15" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 -10" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 -10" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 -10" scale="9 9 9"></a-gltf-model>
 
 
 
 
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 -5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 -5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 -5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 0" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 0" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 0" scale="9 9 9"></a-gltf-model>
-    
+
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 -5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 -5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 -5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 0" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 0" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 0" scale="9 9 9"></a-gltf-model>
 
 
 
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 5" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 -20" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 -20" scale="9 9 9"></a-gltf-model>
-<a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 -20" scale="9 9 9"></a-gltf-model>
-    
+
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-10 0 5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="0 0 5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="10 0 5" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="-8 0 -20" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="2 0 -20" scale="9 9 9"></a-gltf-model>
+    <a-gltf-model src="Factory Complex.glb" class="hazard" position="7 0 -20" scale="9 9 9"></a-gltf-model>
+
 
 
 
     <a-plane position="-10 -2 -15" rotation="-90 0 0" width="100" height="100" color="Green"></a-plane>
-</a-scene>
+  </a-scene>
 
-    
-  </body>
+
+</body>
+
 </html>
